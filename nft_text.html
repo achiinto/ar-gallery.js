@@ -1,0 +1,65 @@
+<!doctype HTML>
+<html>
+<link rel="icon" href="data:;base64,iVBORw0KGgo=">
+<script src="js/aframe.min.js"></script>
+<script src="js/aframe-ar.js"></script>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+
+<!-- support 3D text -->
+<script src="js/aframe-text-geometry-component.min.js"></script>
+
+<body style="margin: 0px; overflow: hidden;">
+
+<!-- we add detectionMode and matrixCodeType to tell AR.js to recognize barcode markers -->
+<a-scene embedded arjs='sourceType: webcam; debugUIEnabled: false; detectionMode: mono_and_matrix; matrixCodeType: 4x4_bch_13_9_3;'>
+
+	<a-assets>
+		<a-asset-item id="exoFont" src="fonts/exoBlack.typeface.json"></a-asset-item>
+		<img id="pixels" src="images/pixels.png" />
+	</a-assets>
+
+	<!-- 2D text -->
+	<a-marker type='barcode' value='0'>
+		
+		<!-- positioning a plane directly below text for increased visibility; need to adjust position to avoid z-fighting.  -->
+		<!-- <a-plane color="white" rotation="-90 0 0" position="0 -0.25 0" width="3" material="transparent: true; opacity: 0.90"></a-plane> -->
+
+		<!-- for more properties, see https://github.com/aframevr/aframe/blob/master/docs/components/text.md -->
+		<a-text value="Hongkongers Revenge!" color="yellow" style="font-weight: bold;" rotation="-90 0 0" position="0.10 -0.2 0" align="center" scale="2 2 2"></a-text>
+
+		<a-entity text-geometry="value: Hongkongers resist!;"
+			material="color: yellow; src: #pixels; repeat: 0.5 0.5;" position="0.01 -0.2 0"
+			rotation="-90 0 0">
+		</a-entity>
+
+		<!-- avoiding z-fighting is difficult; may want to render canvas to text instead -->
+
+	</a-marker>
+
+	<!-- 3D text -->
+  <a-nft
+      type="nft"
+      url="<path-to-your-image-descriptors>"
+      smooth="true"
+      smoothCount="10"
+      smoothTolerance=".01"
+      smoothThreshold="5"
+    >
+		<!-- 
+			using aframe-text-geometry component
+			can set: bevelSize, bevelThickness, curveSegments, font, height, size, style, value.
+			alignment (centering) may be tricky; try calculating bounding box and repositioning.
+			for more info, see: https://www.npmjs.com/package/aframe-text-geometry-component
+		 -->
+		<a-entity text-geometry="value: Hongkongers resist!;"
+			material="color: yellow; src: #pixels; repeat: 0.5 0.5;" 
+			rotation="-90 0 0">
+		</a-entity>
+
+	</a-nft>
+
+    <a-entity camera></a-entity>
+    
+</a-scene>
+</body>
+</html>
